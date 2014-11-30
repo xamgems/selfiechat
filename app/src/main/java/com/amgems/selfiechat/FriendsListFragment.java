@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.amgems.selfiechat.model.Friend;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ import java.util.List;
  */
 public class FriendsListFragment extends Fragment {
     private RecyclerView mFriendsListView;
-    private List<String> mFriendsList;
+    private List<Friend> mFriendsList;
 
     /**
      * Use this factory method to create a new instance of
@@ -48,9 +50,9 @@ public class FriendsListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFriendsList = new ArrayList<>();
-        mFriendsList.add("Zac");
-        mFriendsList.add("Jeremy");
-        mFriendsList.add("Omar");
+        mFriendsList.add(new Friend("Zac", R.drawable.zac));
+        mFriendsList.add(new Friend("Jeremy", R.drawable.jeremy));
+        mFriendsList.add(new Friend("Omar", R.drawable.omar));
         if (getArguments() != null) {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
@@ -67,7 +69,7 @@ public class FriendsListFragment extends Fragment {
         mFriendsListView = (RecyclerView)rootView.findViewById(R.id.friends_list_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mFriendsListView.setLayoutManager(layoutManager);
-        FriendsListAdapter friendsListAdapter= new FriendsListAdapter(mFriendsList);
+        FriendsListAdapter friendsListAdapter= new FriendsListAdapter(mFriendsList, getResources());
         mFriendsListView.setAdapter(friendsListAdapter);
 
         return rootView;

@@ -6,6 +6,7 @@
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="1dp"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="1sp">
 
@@ -15,18 +16,20 @@
 
         <ImageView
             android:id="@+id/friend_image"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
+            android:layout_margin="1dp"
             android:src="@drawable/ic_launcher" />
 
         <TextView
             android:id="@+id/friend_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_toRightOf="@id/friend_image"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_toEndOf="@id/friend_image"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
             android:text="@string/hello_world"

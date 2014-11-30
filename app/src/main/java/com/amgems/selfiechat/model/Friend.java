@@ -6,15 +6,15 @@ package com.amgems.selfiechat.model;
  */
 public class Friend {
     private String name;
-    private String imageRes;
+    private int imageResId;
 
     public Friend(String name) {
         this.name = name;
     }
 
-    public Friend(String name, String imageRes) {
+    public Friend(String name, int imageResId) {
         this.name = name;
-        this.imageRes = imageRes;
+        this.imageResId = imageResId;
     }
 
     public String getName() {
@@ -25,11 +25,11 @@ public class Friend {
         this.name = name;
     }
 
-    public String getImageRes() {
-        return imageRes;
+    public int getImageResId() {
+        return imageResId;
     }
 
-    public void setImageRes(String imageRes) {
-        this.imageRes = imageRes;
+    public void setImageResId(int imageResId) {
+        this.imageResId = imageResId;
     }
 }
