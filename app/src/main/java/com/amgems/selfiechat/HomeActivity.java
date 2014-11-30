@@ -1,19 +1,33 @@
 package com.amgems.selfiechat;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 public class HomeActivity extends ActionBarActivity {
 
+    /** Root view of this activity housing the navigation drawer **/
+    private DrawerLayout mDrawerLayout;
+    /** Fragment that manages the navigation drawer **/
+    private NavigationDrawerFragment mDrawerFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        setUp();
     }
 
+    public void setUp() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.home_drawer_layout);
+        mDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_fragment);
+        mDrawerFragment.setUp(R.id.navigation_fragment, mDrawerLayout, getSupportActionBar());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
