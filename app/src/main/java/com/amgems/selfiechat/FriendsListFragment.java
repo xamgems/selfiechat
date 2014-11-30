@@ -48,9 +48,9 @@ public class FriendsListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFriendsList = new ArrayList<>();
-        mFriendsList.add("zac");
-        mFriendsList.add("jeremy");
-        mFriendsList.add("omar");
+        mFriendsList.add("Zac");
+        mFriendsList.add("Jeremy");
+        mFriendsList.add("Omar");
         if (getArguments() != null) {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
