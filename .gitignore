@@ -14,8 +14,7 @@
 /local.properties
 
 # androidstudio config files
-/.idea/workspace.xml
-/.idea/libraries
+.idea/
 *.iml
 
 # Generated files
