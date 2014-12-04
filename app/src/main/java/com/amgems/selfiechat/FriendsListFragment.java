@@ -1,6 +1,7 @@
 package com.amgems.selfiechat;
 
 import android.app.Activity;
+import android.graphics.Outline;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 
 import com.amgems.selfiechat.model.Friend;
 
@@ -71,6 +73,10 @@ public class FriendsListFragment extends Fragment {
         mFriendsListView.setLayoutManager(layoutManager);
         FriendsListAdapter friendsListAdapter= new FriendsListAdapter(mFriendsList, getResources());
         mFriendsListView.setAdapter(friendsListAdapter);
+
+        // Setup FAB
+        final int diameter = 1;
+        View addButton = rootView.findViewById(R.id.add_button);
 
         return rootView;
     }

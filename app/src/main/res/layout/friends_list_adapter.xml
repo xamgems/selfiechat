@@ -7,8 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="1dp"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="1sp">
+    card_view:cardCornerRadius="@dimen/cardview_default_radius"
+    card_view:cardElevation="@dimen/cardview_default_elevation">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:id="@+id/friend_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="24sp"
+            android:textSize="@dimen/abc_text_size_large_material"
             android:gravity="center"
             android:layout_toEndOf="@id/friend_image"
             android:layout_alignParentEnd="true"
