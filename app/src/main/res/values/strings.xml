@@ -4,5 +4,13 @@
     <string name="app_name">SelfieChat</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Navigation Drawer -->
+    <string name="nav_drawer_open">Open navigation drawer</string>
+    <string name="nav_drawer_close">Close navigation drawer</string>
+
+    <!-- Friends fragment -->
+    <string name="frag_friends_title">Friends</string>
 
 </resources>

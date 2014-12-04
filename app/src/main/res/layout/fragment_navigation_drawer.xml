@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA"
+    tools:context="com.amgems.selfiechat.NavigationDrawerFragment">
+
+    <ImageView
+        android:id="@+id/drawer_cover"
+        android:layout_width="match_parent"
+        android:layout_height="152dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/drawer_cover"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:id="@+id/image_user_avatar"
+        android:layout_width="@dimen/list_icon_size"
+        android:layout_height="@dimen/list_icon_size"
+        android:layout_marginStart="@dimen/horizontal_keyline"
+        android:layout_alignBottom="@+id/text_user_name"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/text_user_name"
+        android:translationX="-72dp"
+        android:alpha="0.25"
+        android:src="@null"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:id="@id/text_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/horizontal_keyline"
+        android:layout_marginEnd="@dimen/horizontal_keyline"
+        android:layout_marginTop="14dp"
+        android:layout_above="@+id/text_user_email"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:text="Jennifer Lawrence"/>
+
+    <TextView
+        android:id="@id/text_user_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/horizontal_keyline"
+        android:layout_marginEnd="@dimen/horizontal_keyline"
+        android:layout_marginBottom="14dp"
+        android:layout_alignBottom="@id/drawer_cover"
+        android:fontFamily="sans-serif"
+        android:textColor="#B2FFFFFF"
+        android:textSize="14sp"
+        android:text="jenn.lawrence@gmail.com"/>
+
+</RelativeLayout>
