@@ -16,6 +16,7 @@
 # androidstudio config files
 /.idea/workspace.xml
 /.idea/libraries
+*.iml
 
 # Generated files
 .DS_Store
