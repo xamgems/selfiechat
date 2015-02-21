@@ -18,12 +18,24 @@
             android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"/>
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragment_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <fragment
             android:id="@+id/friends_list_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:name="com.amgems.selfiechat.FriendsListFragment"
             tools:layout="@layout/fragment_friends_list"/>
+
+        <fragment
+            android:id="@+id/camera_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.amgems.selfiechat.view.CameraFragment"
+            />
 
     </LinearLayout>
 
