@@ -1,5 +1,6 @@
 package com.amgems.selfiechat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,14 +9,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.amgems.selfiechat.view.CameraFragment;
 
 
 public class HomeActivity extends ActionBarActivity {
-
     /** Root view of this activity housing the navigation drawer **/
     private DrawerLayout mDrawerLayout;
     /** Fragment that manages the navigation drawer **/
