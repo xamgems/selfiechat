@@ -14,8 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.amgems.selfiechat.api.WebClient;
 import com.amgems.selfiechat.view.CameraFragment;
-
+import com.amgems.selfiechat.view.SnapViewFragment;
 
 public class HomeActivity extends ActionBarActivity {
     /** Root view of this activity housing the navigation drawer **/
@@ -29,6 +30,8 @@ public class HomeActivity extends ActionBarActivity {
     /** Pager to page fragments **/
     private ViewPager mPager;
 
+    public static WebClient webClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,7 @@ public class HomeActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
+        webClient = new WebClient();
         setUp();
     }
 
@@ -80,7 +84,7 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     public static class FragmentPager extends FragmentPagerAdapter {
-        private static int TAB_COUNT = 2;
+        private static int TAB_COUNT = 3;
         private Fragment[] fragments;
 
         public FragmentPager(FragmentManager fm) {
@@ -92,9 +96,11 @@ public class HomeActivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             if (fragments[position] == null) {
                 if (position == 0) {
-                    fragments[0] = CameraFragment.newInstance();
+                    fragments[0] = SnapViewFragment.newInstance();
                 } else if (position == 1) {
-                    fragments[1] = FriendsListFragment.newInstance();
+                    fragments[1] = CameraFragment.newInstance();
+                } else if (position == 2) {
+                    fragments[2] = FriendsListFragment.newInstance();
                 }
             }
             return fragments[position];

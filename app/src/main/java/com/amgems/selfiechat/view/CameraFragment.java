@@ -4,13 +4,9 @@ package com.amgems.selfiechat.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,13 +16,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.amgems.selfiechat.HomeActivity;
 import com.amgems.selfiechat.R;
+import com.amgems.selfiechat.api.SelfieChatService;
+import com.amgems.selfiechat.model.Snap;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.TypedFile;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +41,7 @@ public class CameraFragment extends Fragment {
     private Button mSnapButton;
     private Button mSendButton;
 
-    private String mCurrentPhotoPath;
+    private Snap mCurrentSnap;
 
     /**
      * Use this factory method to create a new instance of
@@ -64,7 +65,7 @@ public class CameraFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_camera, container, false);
         mPreview = (ImageView) rootView.findViewById(R.id.camera_preview);
@@ -74,7 +75,27 @@ public class CameraFragment extends Fragment {
         mSnapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                takePhoto();
+                takeSnap();
+            }
+        });
+        mSendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelfieChatService selfieChatService = HomeActivity.webClient.getSelfieChatService();
+                File toSend = mCurrentSnap.getFile();
+                selfieChatService.sendSnap(new TypedFile("image/jpg", toSend),
+                        new Callback<Response>() {
+                            @Override
+                            public void success(Response response, Response response2) {
+                                Toast.makeText(getActivity(), "Sent Snap!", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                Log.e(getClass().getSimpleName(), error.getMessage());
+                            }
+                        });
             }
         });
 
@@ -97,45 +118,28 @@ public class CameraFragment extends Fragment {
         }
     }
 
-    private void takePhoto() {
+    private void takeSnap() {
         File tempFile = null;
         try {
-            tempFile = createTempFile();
+            tempFile = Snap.createTempFile(getActivity());
+            Snap snap = new Snap(tempFile.getAbsolutePath());
         } catch (IOException e) {
             Log.e(getClass().getSimpleName(), e.getMessage());
         }
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         boolean usingThumbnail = tempFile == null;
         if (!usingThumbnail) {
-            Log.d(getClass().getSimpleName(), "putExtra()" + Uri.fromFile(tempFile));
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
         }
         startActivityForResult(cameraIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
-    private File createTempFile() throws IOException {
-//       Create a unique signature for temp files
-        String timeStamp = Long.toString(System.currentTimeMillis());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-
-        File tempFile = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        mCurrentPhotoPath = tempFile.getAbsolutePath();
-
-        return tempFile;
-    }
-
     private void handleImage(Intent data) {
         Bitmap imageBitmap = null;
-        boolean usingThumbnail = mCurrentPhotoPath == null;
+        boolean usingThumbnail = mCurrentSnap == null;
         if  (!usingThumbnail) {
             Toast.makeText(getActivity(), "Displaying Fullscale Image", Toast.LENGTH_SHORT).show();
-            imageBitmap = getBitmapFromFile(mPreview, mCurrentPhotoPath);
+            imageBitmap = mCurrentSnap.getBitmap(mPreview);
         }
 
         if (usingThumbnail) {
@@ -151,27 +155,5 @@ public class CameraFragment extends Fragment {
                     .show();
             Log.d(getClass().getSimpleName(), "ImageBitmap was null");
         }
-    }
-
-    private Bitmap getBitmapFromFile(ImageView imageView, String pathToFile) {
-        // Get the dimensions of the View
-        int targetW = imageView.getWidth();
-        int targetH = imageView.getHeight();
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(pathToFile, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-
-        return BitmapFactory.decodeFile(pathToFile, bmOptions);
     }
 }

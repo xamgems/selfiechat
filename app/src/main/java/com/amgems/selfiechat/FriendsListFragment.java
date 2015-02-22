@@ -1,7 +1,6 @@
 package com.amgems.selfiechat;
 
 import android.app.Activity;
-import android.graphics.Outline;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 
 import com.amgems.selfiechat.model.Friend;
 
@@ -52,9 +50,9 @@ public class FriendsListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFriendsList = new ArrayList<>();
-        mFriendsList.add(new Friend("Zac", R.drawable.zac));
+        mFriendsList.add(new Friend("Zac", R.drawable.omar));
         mFriendsList.add(new Friend("Jeremy", R.drawable.jeremy));
-        mFriendsList.add(new Friend("Omar", R.drawable.omar));
+        mFriendsList.add(new Friend("Omar", R.drawable.zac));
     }
 
     @Override
