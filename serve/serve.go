@@ -22,7 +22,7 @@ const (
 
 func main() {
 	if len(os.Args) != 3 {
-		log.Fatalf("Usage: ./%s defaultimg port", filepath.Base(os.Args[0]))
+		log.Fatalf("Usage: ./%s defaultimg.[jpeg|jpg] port", filepath.Base(os.Args[0]))
 	}
 
 	port := os.Args[2]
