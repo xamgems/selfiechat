@@ -24,27 +24,19 @@ public class Snap {
     public static final String FILE_SUFFIX = ".jpg";
     private File mSnapFile;
 
-    public Snap(InputStream inputStream, File dir) {
-        try {
-            mSnapFile = File.createTempFile(FILE_PREFIX, FILE_SUFFIX, dir);
-            FileOutputStream outputStream = new FileOutputStream(mSnapFile);
-            byte[] buff = new byte[BUFF_SIZE];
-            int read = 0;
-            while (read != -1) {
-                read = inputStream.read(buff);
-                outputStream.write(buff);
-            }
-        } catch (IOException e) {
-            Log.e(getClass().getSimpleName(), "NotDir " + dir.getAbsolutePath() + e.getMessage());
+    public Snap(InputStream inputStream, File dir) throws IOException {
+        mSnapFile = File.createTempFile(FILE_PREFIX, FILE_SUFFIX, dir);
+        FileOutputStream outputStream = new FileOutputStream(mSnapFile);
+        byte[] buff = new byte[BUFF_SIZE];
+        int read = 0;
+        while (read != -1) {
+            read = inputStream.read(buff);
+            outputStream.write(buff);
         }
     }
 
-    public Snap(String path) {
-        try {
-            mSnapFile = File.createTempFile(FILE_PREFIX, FILE_SUFFIX, new File(path));
-        } catch (IOException e) {
-            Log.e(getClass().getSimpleName(), "NotDir " + path + e.getMessage());
-        }
+    public Snap(String path) throws IOException {
+        mSnapFile = File.createTempFile(FILE_PREFIX, FILE_SUFFIX, new File(path));
     }
 
     public byte[] toByteArray() {
@@ -97,11 +89,10 @@ public class Snap {
         return mSnapFile;
     }
 
-    public static File createTempFile(Context context) throws IOException {
+    public static File createTempFile(File storageDir) throws IOException {
 //       Create a unique signature for temp files
         String timeStamp = Long.toString(System.currentTimeMillis());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        String imageFileName = "JPEG_";
 
         return File.createTempFile(
                 imageFileName,  /* prefix */

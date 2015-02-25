@@ -17,7 +17,7 @@ import retrofit.mime.TypedFile;
  * @author shermpay on 2/22/15.
  */
 public interface SelfieChatService {
-    public static final String ENDPOINT = "http://192.168.8.108:8080";
+    public static final String ENDPOINT = "http://173.250.154.142:8080";
 
     @GET("/get_snap")
     public void getSnap(Callback<Response> callback);

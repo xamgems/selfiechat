@@ -88,7 +88,11 @@ public class SnapViewFragment extends Fragment {
 
     private void displaySnap(InputStream inputStream) {
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        Snap snap = new Snap(inputStream, storageDir);
-        mSnapImage.setImageBitmap(snap.getBitmap(mSnapImage));
+        try {
+            Snap snap = new Snap(inputStream, storageDir);
+            mSnapImage.setImageBitmap(snap.getBitmap(mSnapImage));
+        } catch (IOException e) {
+            Log.e(getClass().getSimpleName(), "IOException when creating Snap");
+        }
     }
 }

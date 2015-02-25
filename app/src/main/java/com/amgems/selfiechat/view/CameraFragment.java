@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -93,7 +94,8 @@ public class CameraFragment extends Fragment {
 
                             @Override
                             public void failure(RetrofitError error) {
-                                Log.e(getClass().getSimpleName(), error.getMessage());
+                                Log.e(getClass().getSimpleName(),
+                                        "RetrofitError " + error.getMessage());
                             }
                         });
             }
@@ -121,32 +123,28 @@ public class CameraFragment extends Fragment {
     private void takeSnap() {
         File tempFile = null;
         try {
-            tempFile = Snap.createTempFile(getActivity());
-            Snap snap = new Snap(tempFile.getAbsolutePath());
+            File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            if (!storageDir.exists()) {
+                boolean success = storageDir.mkdirs();
+                if (!success) {
+                    Log.e(getClass().getSimpleName(), "TakeSnap() unable to mkdirs at "
+                            +storageDir);
+                }
+            }
+            mCurrentSnap = new Snap(storageDir.getAbsolutePath());
+            tempFile = mCurrentSnap.getFile();
         } catch (IOException e) {
-            Log.e(getClass().getSimpleName(), e.getMessage());
+            Log.e(getClass().getSimpleName(), "TakeSnap() " + e.getMessage());
         }
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        boolean usingThumbnail = tempFile == null;
-        if (!usingThumbnail) {
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
-        }
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
         startActivityForResult(cameraIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     private void handleImage(Intent data) {
         Bitmap imageBitmap = null;
-        boolean usingThumbnail = mCurrentSnap == null;
-        if  (!usingThumbnail) {
-            Toast.makeText(getActivity(), "Displaying Fullscale Image", Toast.LENGTH_SHORT).show();
-            imageBitmap = mCurrentSnap.getBitmap(mPreview);
-        }
-
-        if (usingThumbnail) {
-            Bundle extras = data.getExtras();
-            Toast.makeText(getActivity(), "Displaying Thumbnail", Toast.LENGTH_SHORT).show();
-            imageBitmap = (Bitmap) extras.get("data");
-        }
+        Toast.makeText(getActivity(), "Displaying Fullscale Image", Toast.LENGTH_SHORT).show();
+        imageBitmap = mCurrentSnap.getBitmap(mPreview);
 
         if (imageBitmap != null) {
             mPreview.setImageBitmap(imageBitmap);

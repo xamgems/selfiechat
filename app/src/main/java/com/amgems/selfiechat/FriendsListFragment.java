@@ -50,9 +50,9 @@ public class FriendsListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFriendsList = new ArrayList<>();
-        mFriendsList.add(new Friend("Zac", R.drawable.omar));
+        mFriendsList.add(new Friend("Zac", R.drawable.zac));
         mFriendsList.add(new Friend("Jeremy", R.drawable.jeremy));
-        mFriendsList.add(new Friend("Omar", R.drawable.zac));
+        mFriendsList.add(new Friend("Omar", R.drawable.omar));
     }
 
     @Override
